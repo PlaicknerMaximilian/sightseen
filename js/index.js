@@ -1,10 +1,21 @@
 let map;
 
 function initMap() {
+  const localContextMapView = new google.maps.localContext.LocalContextMapView({
+    element: document.getElementById("map"),
+    placeTypePreferences: [
+      { type: "restaurant" },
+      { type: "tourist_attraction" },
+    ],
+    maxPlaceCount: 12,
+  });
+  map = localContextMapView.map;
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -34.397, lng: 150.644 },
     zoom: 8,
   });
+
+
 
   var marker = null;
 
