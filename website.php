@@ -25,6 +25,12 @@
 
   <div id="map"></div>
 
+  <c>Live Standort</c>
+  <label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+  </label>
+
   <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
   <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&callback=initMap&v=weekly"
