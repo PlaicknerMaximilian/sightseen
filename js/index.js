@@ -30,7 +30,7 @@ function initMap() {
     }); 
 
     // Call the autoUpdate() function every 5 seconds
-    setTimeout(autoUpdate, 5000);
+    //setTimeout(autoUpdate, 5000);
   }
 
   autoUpdate();

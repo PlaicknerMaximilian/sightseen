@@ -30,10 +30,6 @@
       async
     ></script>
 
-    <div class="footer">
-      <h2>Sightseeing</h2>
-      <p>Feichter Philipp, Plaickner Maximilian, Volgger Matthias, Weissteiner Josef</p>
-    </div>
 
   </body>
 </html>
