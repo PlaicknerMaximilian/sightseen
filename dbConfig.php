@@ -1,9 +1,9 @@
 <?php
     // Database configuration
-    $dbservername = "";
-    $dbusername = "";
+    $dbservername = "localhost";
+    $dbusername = "root";
     $dbpassword = "";
-    $dbname = "";
+    $dbname = "sight";
 
     // Verbindung aufbauen
     $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
