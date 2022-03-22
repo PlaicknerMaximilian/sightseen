@@ -5,9 +5,7 @@
 <?php include('loginReg.php'); ?>
 <html>
     <head>
-    <title>Sightseeing</title>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="loginReg.js"></script>
+      <title>Sightseeing</title>
       <link rel="stylesheet" href="css/login.css">
   </head>
   <body>
