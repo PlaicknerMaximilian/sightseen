@@ -1,6 +1,6 @@
 <?php
     // Database configuration
-    $dbservername = "localhost";
+    $dbservername = "10.171.153.47";
     $dbusername = "root";
     $dbpassword = "";
     $dbname = "sight";
