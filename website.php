@@ -23,9 +23,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/website.css">
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script src="js/index.js"></script>
+    <link rel="shortcut icon" href="#">
   </head>
   <body>
 
@@ -42,21 +44,9 @@
 
   <div id="map"></div>
 
-  <c>Live Standort</c>
-  <label class="switch">
-  <input type="checkbox">
-  <span class="slider round"></span>
-  </label>
-
-  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
   <form method="post" action="">
-    <input type="submit" value="Ort suchen" name="add" id="add">
-    <input type="submit" value="Ort suchen" name="add2" id="add2">
+    <span id="locationSpan">Live location: </span><input type="submit" value="On" name="on" id="on">
+    <input type="submit" value="Off" name="off">
   </form>
-
-  
-
-
-
   </body>
 </html>
