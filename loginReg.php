@@ -1,6 +1,3 @@
-<!--
-  Funktionen und Methoden und Logik von index.php
--->
 <?php
     include 'dbConfig.php';
     session_start();
@@ -10,14 +7,15 @@
     if(isset($_SESSION['user']) && isset($_SESSION['password'])) {
         $s_user = $_SESSION['user'];
         $s_password = $_SESSION['password'];
-        echo($_SESSION['user']);
+        checkPasswordAndUsername();
     } else if(isset($_COOKIE['user']) && isset($_COOKIE['password'])) {
         $s_user = $_COOKIE['user'];
         $s_password = $_COOKIE['password'];
-        echo($_COOKIE['user']);
+        checkPasswordAndUsername();
     } else {
         $s_user = "";
         $s_password = "";
+        checkPasswordAndUsername();
     }
 
     //Schauen, ob Username und Password gesetzt sind und ob dann, ob sie in der Datenbank gespeichert sind
@@ -34,6 +32,7 @@
                 // When checkPasswordUser is false something is wrong
                 // When checkPasswordUser is true it skipps this if and goes on
             } else {
+                echo("asdfasdfasdfasdf");
                 $user =  $_POST['user'];
                 $password = $_POST['password'];
 
@@ -66,14 +65,13 @@
                     return true;
                 }
             }
-            // Mit error wird der Style der Fehlermeldung gesetzt.
-            global $error;
-            $error = 'style="display: block;"';
-            global $errorText;
-            $errorText = "Benutzername oder Passwort ist falsch. Bitte überprüfen.";
-            $conn->close();
-            return false;
         }
+        // Mit error wird der Style der Fehlermeldung gesetzt.
+        global $error;
+        $error = 'style="display: block;"';
+        global $errorText;
+        $errorText = "Benutzername oder Passwort ist falsch. Bitte überprüfen.";
+        return false;
     }
 
     //Schauen, ob der Username schon besetzt ist
@@ -107,6 +105,7 @@
 
     //Neuen Benutzer erstellen
     if (isset($_POST['save'])) {
+        echo("asdfasdffffffffffffffffffffffffffffffffffffffff.-.---------------");
         $vn = $_POST['vn'];
         $nn = $_POST['nn'];
         $un = $_POST['username'];
@@ -115,8 +114,8 @@
         $telNr = $_POST['telNr'];
         $password = $_POST['password'];
         
-        $sql = "INSERT INTO benutzer (vn, nn, gebDat, email, telNr, rolle)
-        VALUES ('$vn', '$nn', '$gebDat', '$email', '$telNr', 'user');";
+        $sql = "INSERT INTO benutzer (vn, nn, gebDat, email, telNr)
+        VALUES ('$vn', '$nn', '$gebDat', '$email', '$telNr');";
 
         if ($conn->query($sql) === TRUE) {
             $last_id = $conn->insert_id;

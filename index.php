@@ -1,6 +1,3 @@
-<!--
-  Loginscreen + Registrieren
--->
 <!DOCTYPE HTML>
 <?php include('loginReg.php'); ?>
 <html>
