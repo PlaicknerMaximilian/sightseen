@@ -4,7 +4,7 @@
     <head>
     <title>Sightseeing</title>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="loginReg.js"></script>
+      <script src="js/loginReg.js"></script>
       <link rel="stylesheet" href="css/login.css">
   </head>
   <body>
