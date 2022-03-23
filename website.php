@@ -5,13 +5,13 @@
     if(isset($_POST['add2'])){
         echo'<script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext&v=beta&callback=initMap2">
-        </script>;';
+        </script>';
     }
 
     if(isset($_POST['add1'])){
         echo'<script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext&v=beta&callback=initMap">
-        </script>;';
+        </script>';
     }
 
 ?>
@@ -36,12 +36,6 @@
   </div>
 
   <div id="map"></div>
-
-  <c>Live Standort</c>
-  <label class="switch" id="check">
-  <input type="checkbox" id="check">
-  <span class="slider round" id="check"></span>
-  </label>
 
   <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
   <form method="post" action="">
