@@ -34,7 +34,7 @@
     <a href="#" class="active">Home</a>
     <a href="#">Link</a>
     <a href="#">Link</a>
-    <a href="#" class="right">Logout</a>
+    <a href="logout.php" class="right">Logout</a>
   </div>
 
   <div id="map"></div>

@@ -45,6 +45,8 @@ $('document').ready(function(){
         },
         success: function(response){
             var result = response.split(/\r\n|\n\r|\n|\r/);  // split by:     \r\n  \n\r  \n  or  \r
+            console.log("asdfasdfasdffffffffffffffffff" + result);
+
             if (result[1] == 'taken') {
                 username_state = false;
                 $('#un').parent().removeClass();
@@ -185,6 +187,7 @@ $('document').ready(function(){
                     'password' : password,
                 },
                 success: function(response){
+                    console.log(response);
                     alert('Neuer Benutzer wurde angelegt!\nWillkommen ' + username + " :)");
                     $('#vn').val('');
                     $('#nn').val('');
