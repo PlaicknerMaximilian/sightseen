@@ -1,7 +1,8 @@
 let map;
-let l=50;
-let b=10; 
+let l=0;
+let b=0; 
 let localContextMapView;
+
 function initMap() {
   localContextMapView = new google.maps.localContext.LocalContextMapView({
     element: document.getElementById("map"),
@@ -12,11 +13,18 @@ function initMap() {
     maxPlaceCount: 12,
   });
 
+  navigator.geolocation.getCurrentPosition(function(position) {  
+  var newPoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  if(l==0){
+    l=position.coords.latitude;  
+    b=position.coords.longitude;
+  }
   map = localContextMapView.map;
   map.setOptions({
     center: { lat: l, lng: b },
     zoom: 12,
   });
+
 
   // Create the initial InfoWindow.
   let infoWindow = new google.maps.InfoWindow({
@@ -43,7 +51,7 @@ function initMap() {
     infoWindow.open(map);
 
     initMap();
-    
+  });  
   });
 
 }
@@ -52,10 +60,32 @@ function initMap() {
 
 
 function initMap2() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 8,
+  localContextMapView = new google.maps.localContext.LocalContextMapView({
+    element: document.getElementById("map"),
+    placeTypePreferences: [
+      { type: "restaurant" },
+      { type: "tourist_attraction" },
+    ],
+    maxPlaceCount: 12,
   });
+  
+  navigator.geolocation.getCurrentPosition(function(position) {  
+    var newPoint = new google.maps.LatLng(position.coords.latitude, 
+                                          position.coords.longitude);
+  l=position.coords.latitude;  
+  b=position.coords.longitude;       
+  
+  map = localContextMapView.map;
+  map.setOptions({
+    center: { lat: l, lng: b },
+    zoom: 12,
+  });
+  });
+  
+
+  
+ 
+
 
   var marker = null;
 
