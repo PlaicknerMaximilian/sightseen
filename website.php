@@ -37,12 +37,6 @@
 
   <div id="map"></div>
 
-  <c>Live Standort</c>
-  <label class="switch" id="check">
-  <input type="checkbox" id="check">
-  <span class="slider round" id="check"></span>
-  </label>
-
   <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
   <form method="post" action="">
     <input type="submit" value="Ort suchen" name="add1" id="add1">
