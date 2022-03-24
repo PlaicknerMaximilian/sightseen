@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <?php
-
+    echo'<script src="js/index.js"></script>';
     if(isset($_POST['add2'])){
         echo'<script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext,places&v=beta&callback=initMap2">
@@ -20,7 +20,7 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link rel="stylesheet" type="text/css" href="css/website.css">
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <script src="js/index.js"></script>
+    
   </head>
   <body>
 

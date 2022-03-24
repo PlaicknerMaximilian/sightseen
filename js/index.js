@@ -15,7 +15,7 @@ function initMap() {
       { type: "stadium"},
       { type: "tourist_attraction"},
     ],
-    maxPlaceCount: 12,
+    maxPlaceCount: 20,
   });
 
   navigator.geolocation.getCurrentPosition(function(position) {  
@@ -82,7 +82,7 @@ function initMap2() {
         { type: "stadium"},
         { type: "tourist_attraction"},
       ],
-      maxPlaceCount: 12,
+      maxPlaceCount: 20,
     });
 
     navigator.geolocation.getCurrentPosition(function(position) {  
