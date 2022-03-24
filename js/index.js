@@ -8,8 +8,12 @@ function initMap() {
   localContextMapView = new google.maps.localContext.LocalContextMapView({
     element: document.getElementById("map"),
     placeTypePreferences: [
-      { type: "restaurant" },
       { type: "tourist_attraction" },
+      { type: "movie_theater"},
+      { type: "park"},
+      { type: "shopping_mall"},
+      { type: "stadium"},
+      { type: "tourist_attraction"},
     ],
     maxPlaceCount: 12,
   });
@@ -64,8 +68,12 @@ function initMap2() {
   localContextMapView = new google.maps.localContext.LocalContextMapView({
     element: document.getElementById("map"),
     placeTypePreferences: [
-      { type: "restaurant" },
       { type: "tourist_attraction" },
+      { type: "movie_theater"},
+      { type: "park"},
+      { type: "shopping_mall"},
+      { type: "stadium"},
+      { type: "tourist_attraction"},
     ],
     maxPlaceCount: 12,
   });
