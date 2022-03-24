@@ -65,19 +65,26 @@ function initMap() {
 
 
 function initMap2() {
-  localContextMapView = new google.maps.localContext.LocalContextMapView({
-    element: document.getElementById("map"),
-    placeTypePreferences: [
-      { type: "tourist_attraction" },
-      { type: "movie_theater"},
-      { type: "park"},
-      { type: "shopping_mall"},
-      { type: "stadium"},
-      { type: "tourist_attraction"},
-    ],
-    maxPlaceCount: 12,
-  });
-  function autoUpdate() {
+
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: 40.76, lng: -73.983 },
+      zoom: 15,
+    });
+  
+
+    localContextMapView = new google.maps.localContext.LocalContextMapView({
+      element: document.getElementById("map"),
+      placeTypePreferences: [
+        { type: "tourist_attraction" },
+        { type: "movie_theater"},
+        { type: "park"},
+        { type: "shopping_mall"},
+        { type: "stadium"},
+        { type: "tourist_attraction"},
+      ],
+      maxPlaceCount: 12,
+    });
+
     navigator.geolocation.getCurrentPosition(function(position) {  
       newPoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     l=position.coords.latitude;  
@@ -89,29 +96,71 @@ function initMap2() {
       zoom: 12,
     });
     });
-    navigator.geolocation.getCurrentPosition(function(position) {  
-      newpoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    function location(){
+      navigator.geolocation.getCurrentPosition(function(position) {  
+        newpoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        if(newPoint==null){
+          location();
+          return;
+        }
+        if (marker) {
+          // Marker already created - Move it
+          console.log("aaa");
+          marker.setPosition(newPoint);
+        }
+        else {
+          // Marker does not exist - Create it
+          console.log("aaa2");
+          marker = new google.maps.Marker({
+            position: newPoint,
+            map: map
+            
+          });
+          
+        }
+  
+        getNearbyPlaces(newPoint);
+  
+        // Center the map on the new position
+        map.setCenter(newPoint);
+        
+      });
+    }
+    location();
+     
 
-      if (marker) {
-        // Marker already created - Move it
-        console.log("aaa");
-        marker.setPosition(newPoint);
-      }
-      else {
-        // Marker does not exist - Create it
-        console.log("aaa2");
-        marker = new google.maps.Marker({
-          position: newPoint,
-          map: map
-        });
-      }
-
-      // Center the map on the new position
-      map.setCenter(newPoint);
-    }); 
+    
 
     // Call the autoUpdate() function every 5 seconds
-    //setTimeout(autoUpdate, 5000);
-  }
-  autoUpdate();
+    //setTimeout(initMap2, 5000);
+
+}
+
+function getNearbyPlaces(position) {
+
+  request = {
+    location: position,
+    radius: '500',
+    query: 'restaurant'
+  };
+
+  service = new google.maps.places.PlacesService(map);
+  
+  
+  service.textSearch(request, callback);
+}
+
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    console.log("callback received " + results.length + " results");
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0; i < results.length; i++) {
+      console.log(JSON.stringify(results[i].formatted_address));
+    }
+    map.fitBounds(bounds);
+    map.setCenter(newPoint);
+    map.setOptions({
+      zoom: 12,
+    });
+  } else console.log("callback.status=" + status);
 }
