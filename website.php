@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 
 <?php
+    $i=1;
     echo'<script src="js/index.js"></script>';
+    
     if(isset($_POST['add2'])){
+      $i=$i+1;
         echo'<script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext,places&v=beta&callback=initMap2">
         </script>';
@@ -41,10 +44,17 @@
   <form method="post" action="">
     <input type="submit" value="Ort suchen" name="add1" id="add1">
     <input type="submit" value="Mich suchen" name="add2" id="add2">
+    
   </form>
   
 
-  
+  <select id="waypoints" multiple>
+        
+  </select>
+
+  <form method="post" action="">
+    <input type="submit" value="Starten" name="start" id="start">
+  </form>
 
 
 

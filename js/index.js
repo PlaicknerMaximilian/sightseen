@@ -4,6 +4,7 @@ let b=0;
 let localContextMapView;
 var newPoint;
 var marker = null;
+
 function initMap() {
   localContextMapView = new google.maps.localContext.LocalContextMapView({
     element: document.getElementById("map"),
@@ -86,9 +87,9 @@ function initMap2() {
     });
 
     navigator.geolocation.getCurrentPosition(function(position) {  
-      newPoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+       newPoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     l=position.coords.latitude;  
-    b=position.coords.longitude;       
+    b=position.coords.longitude;      
     
     map = localContextMapView.map;
     map.setOptions({
@@ -127,6 +128,68 @@ function initMap2() {
       });
     }
     location();
+
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    
+  
+    directionsRenderer.setMap(map);
+    
+    document.getElementById("start").addEventListener("click", () => {
+      calculateAndDisplayRoute(directionsService, directionsRenderer);
+    });
+  }
+  
+  function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+    
+    const waypts = [];
+    const waypts2 = [];
+    const checkboxArray = document.getElementById("waypoints");
+    console.log(checkboxArray);
+    
+    for (let i = 0; i < checkboxArray.length; i++) {
+      if (checkboxArray.options[i].selected) {
+        waypts.push({
+          location: checkboxArray[i].value,
+          stopover: true,
+        });
+      }
+    }
+
+    for(let i = 1; i<waypts.length-1;i++){
+      waypts2[i-1]=waypts[i];
+    }
+
+   console.log(waypts[0].location)
+    directionsService
+      .route({
+        origin: waypts[0].location,
+        destination: waypts[waypts.length-1].location,
+        waypoints: waypts2,
+        optimizeWaypoints: true,
+        travelMode: google.maps.TravelMode.WALKING,
+      })
+      .then((response) => {
+        console.log("response");
+        directionsRenderer.setDirections(response);
+  
+        /*const route = response.routes[0];
+        const summaryPanel = document.getElementById("directions-panel");
+  
+        summaryPanel.innerHTML = "";
+  
+        // For each route, display summary information.
+        for (let i = 0; i < route.legs.length; i++) {
+          const routeSegment = i + 1;
+  
+          summaryPanel.innerHTML +=
+            "<b>Route Segment: " + routeSegment + "</b><br>";
+          summaryPanel.innerHTML += route.legs[i].start_address + " to ";
+          summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
+          summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
+        }*/
+      })
+      .catch((e) => window.alert("Directions request failed due to " + e));
      
 
     
@@ -154,13 +217,31 @@ function callback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     console.log("callback received " + results.length + " results");
     var bounds = new google.maps.LatLngBounds();
-    for (var i = 0; i < results.length; i++) {
-      console.log(JSON.stringify(results[i].formatted_address));
+
+    var min = 12,
+    max = 100,
+    select = document.getElementById('waypoints');
+
+    for (var i = 0; i<=results.length-1; i++){
+      var opt = document.createElement('option');
+      opt.value = JSON.stringify(results[i].formatted_address);
+      opt.innerHTML = JSON.stringify(results[i].formatted_address);
+      select.appendChild(opt);
     }
+  
+    /*
+    for (var i = 0; i < results.length; i++) {
+      
+      document.getElementById('waypoints').innerHTML += '<option value="  montreal, quebec">' + JSON.stringify(results[i].formatted_address) + '</option>';
+      //document.getElementById('waypoints').add(JSON.stringify(results[i].formatted_address));
+    }*/
+    
     map.fitBounds(bounds);
     map.setCenter(newPoint);
     map.setOptions({
       zoom: 12,
     });
+    marker.setPosition(newPoint);
   } else console.log("callback.status=" + status);
 }
+
