@@ -58,9 +58,10 @@ function initMap() {
     initMap();  
   });
   });
-    
-  
 }
+
+
+
 
 
 
@@ -159,12 +160,12 @@ function initMap2() {
     for(let i = 1; i<waypts.length-1;i++){
       waypts2[i-1]=waypts[i];
     }
+    console.log(waypts);
 
-   console.log(waypts[0].location)
     directionsService
       .route({
-        origin: waypts[0].location,
-        destination: waypts[waypts.length-1].location,
+        origin: "Brixen, italy",
+        destination: "Bozen, italy",
         waypoints: waypts2,
         optimizeWaypoints: true,
         travelMode: google.maps.TravelMode.WALKING,
@@ -173,7 +174,7 @@ function initMap2() {
         console.log("response");
         directionsRenderer.setDirections(response);
   
-        /*const route = response.routes[0];
+        const route = response.routes[0];
         const summaryPanel = document.getElementById("directions-panel");
   
         summaryPanel.innerHTML = "";
@@ -182,17 +183,13 @@ function initMap2() {
         for (let i = 0; i < route.legs.length; i++) {
           const routeSegment = i + 1;
   
-          summaryPanel.innerHTML +=
-            "<b>Route Segment: " + routeSegment + "</b><br>";
+          summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br>";
           summaryPanel.innerHTML += route.legs[i].start_address + " to ";
           summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
           summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
-        }*/
+        }
       })
       .catch((e) => window.alert("Directions request failed due to " + e));
-     
-
-    
 
     // Call the autoUpdate() function every 5 seconds
     //setTimeout(initMap2, 5000);

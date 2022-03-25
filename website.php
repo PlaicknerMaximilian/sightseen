@@ -52,9 +52,9 @@
         
   </select>
 
-  <form method="post" action="">
-    <input type="submit" value="Starten" name="start" id="start">
-  </form>
+
+  <input type="submit" value="Starten" name="start" id="start">
+  <div id="directions-panel"></div>
 
 
 
