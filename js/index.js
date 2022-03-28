@@ -4,6 +4,7 @@ let b=0;
 let localContextMapView;
 var newPoint;
 var marker = null;
+var pos;
 
 function initMap() {
   localContextMapView = new google.maps.localContext.LocalContextMapView({
@@ -94,7 +95,7 @@ function initMap2() {
   });
   });
   function location(){
-    navigator.geolocation.getCurrentPosition(function(position) {  
+    navigator.geolocation.getCurrentPosition(function(position) {
       newpoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       if(newPoint==null){
         location();
@@ -115,7 +116,8 @@ function initMap2() {
         });
         
       }
-      getNearbyPlaces(newPoint);
+      console.log(newPoint);
+      //getNearbyPlaces(newPoint);
       // Center the map on the new position
       map.setCenter(newPoint);
     });
@@ -130,6 +132,7 @@ function initMap2() {
 }
 
 function initMap3() {
+
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
 
@@ -138,23 +141,46 @@ function initMap3() {
     center: { lat: 41.85, lng: -87.65 },
   });
 
-  function location(){
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          marker = new google.maps.Marker({
-            position: pos,
-            map: map,
-          });
-          map.setCenter(pos);
-      });
-    }
-  }
-  location();
+  navigator.geolocation.getCurrentPosition(function(position) {  
+    newPoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+ l=position.coords.latitude;  
+ b=position.coords.longitude;      
+ 
+ map = localContextMapView.map;
+ map.setOptions({
+   center: { lat: l, lng: b },
+   zoom: 12,
+ });
+ });
+ function location(){
+   navigator.geolocation.getCurrentPosition(function(position) {
+     newpoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+     if(newPoint==null){
+       location();
+       return;
+     }
+     if (marker) {
+       // Marker already created - Move it
+       console.log("aaa");
+       marker.setPosition(newPoint);
+     }
+     else {
+       // Marker does not exist - Create it
+       console.log("aaa2");
+       marker = new google.maps.Marker({
+         position: newPoint,
+         map: map
+         
+       });
+       
+     }
+     console.log(newPoint);
+     getNearbyPlaces(newPoint);
+     // Center the map on the new position
+     map.setCenter(newPoint);
+   });
+ }
+ location();
 
   directionsRenderer.setMap(map);
   
@@ -218,6 +244,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
 }
 
 function getNearbyPlaces(position) {
+  console.log(position);
 
   request = {
     location: position,
@@ -226,7 +253,6 @@ function getNearbyPlaces(position) {
   };
 
   service = new google.maps.places.PlacesService(map);
-  
   
   service.textSearch(request, callback);
 }
@@ -256,4 +282,3 @@ function callback(results, status) {
     marker.setPosition(newPoint);
   } else console.log("callback.status=" + status);
 }
-
