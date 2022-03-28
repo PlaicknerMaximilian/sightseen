@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 
 <?php
-    $i=1;
     echo'<script src="js/index.js"></script>';
     
-    if(isset($_POST['add2'])){
-      $i=$i+1;
+    if(isset($_GET['was'])){
+      if($_GET['was']=="route"){
         echo'<script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext,places&v=beta&callback=initMap2">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=places&v=beta&callback=initMap3">
         </script>';
-    }
-
-    if(isset($_POST['add1'])){
+      }if($_GET['was']=="ortsuchen"){
         echo'<script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext&v=beta&callback=initMap">
         </script>';
+      }if($_GET['was']=="michsuchen"){
+        echo'<script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext,places&v=beta&callback=initMap2">
+        </script>';
+      }
     }
 
 ?>
@@ -32,20 +34,21 @@
   </div>
 
   <div class="navbar">
-    <a href="#" class="active">Home</a>
-    <a href="#">Link</a>
-    <a href="#">Link</a>
+  <!--
+    <a href="10.10.30.51:8080?was=michsuchen">Dich suchen</a>
+    <a href="10.10.30.51:8080?was=ortsuchen">Ort suchen</a>
+    <a href="10.10.30.51:8080?was=route">Routenplaner</a>
+    <a href="logout.php" class="right">Logout</a>
+  -->
+    <a href="?was=michsuchen">Dich suchen</a>
+    <a href="?was=ortsuchen">Ort suchen</a>
+    <a href="?was=route">Routenplaner</a>
     <a href="logout.php" class="right">Logout</a>
   </div>
 
   <div id="map"></div>
 
   <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-  <form method="post" action="">
-    <input type="submit" value="Ort suchen" name="add1" id="add1">
-    <input type="submit" value="Mich suchen" name="add2" id="add2">
-    
-  </form>
   
 
   <select id="waypoints" multiple>
