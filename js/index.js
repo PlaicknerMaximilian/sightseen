@@ -1,4 +1,4 @@
-let map;
+var map;
 let l=0;
 let b=0; 
 let localContextMapView;
@@ -60,139 +60,160 @@ function initMap() {
   });
 }
 
-
-
-
-
-
-
 function initMap2() {
+  const directionsService = new google.maps.DirectionsService();
+  const directionsRenderer = new google.maps.DirectionsRenderer();
 
-    map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 40.76, lng: -73.983 },
-      zoom: 15,
-    });
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 40.76, lng: -73.983 },
+    zoom: 15,
+  });
+
+  localContextMapView = new google.maps.localContext.LocalContextMapView({
+    element: document.getElementById("map"),
+    placeTypePreferences: [
+      { type: "tourist_attraction" },
+      { type: "movie_theater"},
+      { type: "park"},
+      { type: "shopping_mall"},
+      { type: "stadium"},
+      { type: "tourist_attraction"},
+    ],
+    maxPlaceCount: 20,
+  });
+
+  navigator.geolocation.getCurrentPosition(function(position) {  
+     newPoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  l=position.coords.latitude;  
+  b=position.coords.longitude;      
   
-
-    localContextMapView = new google.maps.localContext.LocalContextMapView({
-      element: document.getElementById("map"),
-      placeTypePreferences: [
-        { type: "tourist_attraction" },
-        { type: "movie_theater"},
-        { type: "park"},
-        { type: "shopping_mall"},
-        { type: "stadium"},
-        { type: "tourist_attraction"},
-      ],
-      maxPlaceCount: 20,
-    });
-
+  map = localContextMapView.map;
+  map.setOptions({
+    center: { lat: l, lng: b },
+    zoom: 12,
+  });
+  });
+  function location(){
     navigator.geolocation.getCurrentPosition(function(position) {  
-       newPoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    l=position.coords.latitude;  
-    b=position.coords.longitude;      
-    
-    map = localContextMapView.map;
-    map.setOptions({
-      center: { lat: l, lng: b },
-      zoom: 12,
-    });
-    });
-    function location(){
-      navigator.geolocation.getCurrentPosition(function(position) {  
-        newpoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        if(newPoint==null){
-          location();
-          return;
-        }
-        if (marker) {
-          // Marker already created - Move it
-          console.log("aaa");
-          marker.setPosition(newPoint);
-        }
-        else {
-          // Marker does not exist - Create it
-          console.log("aaa2");
-          marker = new google.maps.Marker({
-            position: newPoint,
-            map: map
-            
-          });
+      newpoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      if(newPoint==null){
+        location();
+        return;
+      }
+      if (marker) {
+        // Marker already created - Move it
+        console.log("aaa");
+        marker.setPosition(newPoint);
+      }
+      else {
+        // Marker does not exist - Create it
+        console.log("aaa2");
+        marker = new google.maps.Marker({
+          position: newPoint,
+          map: map
           
-        }
-  
-        getNearbyPlaces(newPoint);
-  
-        // Center the map on the new position
-        map.setCenter(newPoint);
+        });
         
-      });
-    }
-    location();
-
-    const directionsService = new google.maps.DirectionsService();
-    const directionsRenderer = new google.maps.DirectionsRenderer();
-    
-  
-    directionsRenderer.setMap(map);
-    
-    document.getElementById("start").addEventListener("click", () => {
-      calculateAndDisplayRoute(directionsService, directionsRenderer);
+      }
+      getNearbyPlaces(newPoint);
+      // Center the map on the new position
+      map.setCenter(newPoint);
     });
   }
+  location();
+
+  directionsRenderer.setMap(map);
   
-  function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-    
-    const waypts = [];
-    const waypts2 = [];
-    const checkboxArray = document.getElementById("waypoints");
-    console.log(checkboxArray);
-    
-    for (let i = 0; i < checkboxArray.length; i++) {
-      if (checkboxArray.options[i].selected) {
-        waypts.push({
-          location: checkboxArray[i].value,
-          stopover: true,
-        });
+  document.getElementById("start").addEventListener("click", () => {
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
+  });
+}
+
+function initMap3() {
+  const directionsService = new google.maps.DirectionsService();
+  const directionsRenderer = new google.maps.DirectionsRenderer();
+
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 6,
+    center: { lat: 41.85, lng: -87.65 },
+  });
+
+  function location(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          marker = new google.maps.Marker({
+            position: pos,
+            map: map,
+          });
+          map.setCenter(pos);
+      });
+    }
+  }
+  location();
+
+  directionsRenderer.setMap(map);
+  
+  document.getElementById("start").addEventListener("click", () => {
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
+  });
+}
+  
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+  const waypts = [];
+  const waypts2 = [];
+  const checkboxArray = document.getElementById("waypoints");
+  console.log(checkboxArray);
+  
+  for (let i = 0; i < checkboxArray.length; i++) {
+    if (checkboxArray.options[i].selected) {
+      waypts.push({
+        location: checkboxArray[i].value,
+        stopover: true,
+      });
+    }
+  }
+
+  for(let i = 1; i<waypts.length-1;i++){
+    waypts2[i-1]=waypts[i];
+  }
+  console.log(waypts);
+
+  directionsService
+    .route({
+      origin: "Bozen, Italy",
+      destination: "Meran, Italy",
+      waypoints: waypts,
+      optimizeWaypoints: true,
+      travelMode: google.maps.TravelMode.DRIVING,
+    })
+    .then((response) => {
+      console.log("response");
+      directionsRenderer.setDirections(response);
+
+      const route = response.routes[0];
+      const summaryPanel = document.getElementById("directions-panel");
+
+      summaryPanel.innerHTML = "";
+
+      // For each route, display summary information.
+      for (let i = 0; i < route.legs.length; i++) {
+        const routeSegment = i + 1;
+
+        summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br>";
+        summaryPanel.innerHTML += route.legs[i].start_address + " to ";
+        summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
+        summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
       }
-    }
+    })
+    .catch((e) => window.alert("Directions request failed due to " + e));
 
-    for(let i = 1; i<waypts.length-1;i++){
-      waypts2[i-1]=waypts[i];
-    }
-    console.log(waypts);
-
-    directionsService
-      .route({
-        origin: "Brixen, italy",
-        destination: "Bozen, italy",
-        waypoints: waypts2,
-        optimizeWaypoints: true,
-        travelMode: google.maps.TravelMode.WALKING,
-      })
-      .then((response) => {
-        console.log("response");
-        directionsRenderer.setDirections(response);
-  
-        const route = response.routes[0];
-        const summaryPanel = document.getElementById("directions-panel");
-  
-        summaryPanel.innerHTML = "";
-  
-        // For each route, display summary information.
-        for (let i = 0; i < route.legs.length; i++) {
-          const routeSegment = i + 1;
-  
-          summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br>";
-          summaryPanel.innerHTML += route.legs[i].start_address + " to ";
-          summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
-          summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
-        }
-      })
-      .catch((e) => window.alert("Directions request failed due to " + e));
-
-    // Call the autoUpdate() function every 5 seconds
-    //setTimeout(initMap2, 5000);
+  // Call the autoUpdate() function every 5 seconds
+  //setTimeout(initMap2, 5000);
 
 }
 
@@ -219,19 +240,13 @@ function callback(results, status) {
     max = 100,
     select = document.getElementById('waypoints');
 
+    // Add places to the select as options
     for (var i = 0; i<=results.length-1; i++){
       var opt = document.createElement('option');
       opt.value = JSON.stringify(results[i].formatted_address);
       opt.innerHTML = JSON.stringify(results[i].formatted_address);
       select.appendChild(opt);
     }
-  
-    /*
-    for (var i = 0; i < results.length; i++) {
-      
-      document.getElementById('waypoints').innerHTML += '<option value="  montreal, quebec">' + JSON.stringify(results[i].formatted_address) + '</option>';
-      //document.getElementById('waypoints').add(JSON.stringify(results[i].formatted_address));
-    }*/
     
     map.fitBounds(bounds);
     map.setCenter(newPoint);
