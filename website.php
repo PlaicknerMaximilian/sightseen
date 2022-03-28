@@ -5,16 +5,26 @@
     
     if(isset($_GET['was'])){
       if($_GET['was']=="route"){
+        $way="";
         echo'<script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=places&v=beta&callback=initMap3">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=places&v=beta&callback=initMap3"
+        >
+                
         </script>';
       }if($_GET['was']=="ortsuchen"){
+        $way="hidden";
+
         echo'<script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext&v=beta&callback=initMap">
+          
+         
+          
         </script>';
       }if($_GET['was']=="michsuchen"){
+        $way="hidden";
         echo'<script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext,places&v=beta&callback=initMap2">
+        
         </script>';
       }
     }
@@ -23,11 +33,13 @@
 <html lang=en>
   <head>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/website.css">
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     
   </head>
   <body>
+    <script></script>
 
   <div class="header">
     <h1>Sightseeing</h1>
@@ -51,12 +63,12 @@
   <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
   
 
-  <select id="waypoints" multiple>
+  <select <?php echo $way ?> id="waypoints" multiple>
         
   </select>
 
 
-  <input type="submit" value="Starten" name="start" id="start">
+  <input <?php echo $way ?> type="submit" value="Starten" name="start" id="start">
   <div id="directions-panel"></div>
 
 
