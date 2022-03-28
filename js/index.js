@@ -248,8 +248,8 @@ function getNearbyPlaces(position) {
 
   request = {
     location: position,
-    radius: '500',
-    query: 'restaurant'
+    radius: '10',
+    query: 'tourist_attraction',
   };
 
   service = new google.maps.places.PlacesService(map);
