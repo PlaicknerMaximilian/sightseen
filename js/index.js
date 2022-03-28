@@ -32,10 +32,9 @@ function initMap() {
     zoom: 12,
   });
 
-
   // Create the initial InfoWindow.
   let infoWindow = new google.maps.InfoWindow({
-    content: "Click the map to get Lat/Lng!",
+    content: "Click the map to show the landmarks of the location!",
     position: { lat: l, lng: b },
   });
 
