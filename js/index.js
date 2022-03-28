@@ -185,11 +185,11 @@ function initMap3() {
   directionsRenderer.setMap(map);
   
   document.getElementById("start").addEventListener("click", () => {
-    calculateAndDisplayRoute(directionsService, directionsRenderer);
+    calculateAndDisplayRoute(directionsService, directionsRenderer, newPoint);
   });
 }
   
-function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+function calculateAndDisplayRoute(directionsService, directionsRenderer, location) {
   const waypts = [];
   const waypts2 = [];
   const checkboxArray = document.getElementById("waypoints");
@@ -204,18 +204,19 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     }
   }
 
-  for(let i = 1; i<waypts.length-1;i++){
-    waypts2[i-1]=waypts[i];
+  for(let i = 0; i<waypts.length-1;i++){
+    waypts2[i]=waypts[i];
   }
-  console.log(waypts);
+  console.log(waypts[waypts.length - 1]);
+  console.log("---------------------");
 
   directionsService
     .route({
-      origin: "Bozen, Italy",
-      destination: "Meran, Italy",
-      waypoints: waypts,
+      origin: location,
+      destination: waypts[waypts.length - 1].location,
+      waypoints: waypts2,
       optimizeWaypoints: true,
-      travelMode: google.maps.TravelMode.DRIVING,
+      travelMode: google.maps.TravelMode.WALKING,
     })
     .then((response) => {
       console.log("response");
@@ -270,7 +271,7 @@ function callback(results, status) {
     for (var i = 0; i<=results.length-1; i++){
       var opt = document.createElement('option');
       opt.value = JSON.stringify(results[i].formatted_address);
-      opt.innerHTML = JSON.stringify(results[i].formatted_address);
+      opt.innerHTML = JSON.stringify(results[i].name);
       select.appendChild(opt);
     }
     
