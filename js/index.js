@@ -1,25 +1,30 @@
 var map;
 let l=0;
 let b=0; 
-let localContextMapView;
 var newPoint;
 var marker = null;
 var pos;
+var categriesAreSet = false;
+var tourist_attraction = "tourist_attraction"
+var movie_theater = "";
+var park = "";
+var shopping_mall = "";
+var stadium = "";
+var isInitMap = false;
 
-function initMap() {
-  localContextMapView = new google.maps.localContext.LocalContextMapView({
-    element: document.getElementById("map"),
-    placeTypePreferences: [
-      { type: "tourist_attraction" },
-      { type: "movie_theater"},
-      { type: "park"},
-      { type: "shopping_mall"},
-      { type: "stadium"},
-      { type: "tourist_attraction"},
-    ],
+let localContextMapView;
+
+function initMap(localContextMapView = new google.maps.localContext.LocalContextMapView({
+  element: document.getElementById("map"),
+  placeTypePreferences: [
+    { type: "tourist_attraction" },
+  ],
     maxPlaceCount: 20,
-  });
-
+  })
+)
+{
+  isInitMap = true;
+  
   navigator.geolocation.getCurrentPosition(function(position) {  
   newPoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   if(l==0){
@@ -60,16 +65,24 @@ function initMap() {
   });
 }
 
-function initMap2() {
+function initMap2(localContextMapView = new google.maps.localContext.LocalContextMapView({
+  element: document.getElementById("map"),
+  placeTypePreferences: [
+    { type: "tourist_attraction" },
+  ],
+  maxPlaceCount: 20,
+})) {
+
+  isInitMap = false;
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
 
-  map = new google.maps.Map(document.getElementById("map"), {
+  /*map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 40.76, lng: -73.983 },
     zoom: 15,
-  });
+  });*/
 
-  localContextMapView = new google.maps.localContext.LocalContextMapView({
+  /*localContextMapView = new google.maps.localContext.LocalContextMapView({
     element: document.getElementById("map"),
     placeTypePreferences: [
       { type: "tourist_attraction" },
@@ -77,10 +90,9 @@ function initMap2() {
       { type: "park"},
       { type: "shopping_mall"},
       { type: "stadium"},
-      { type: "tourist_attraction"},
     ],
     maxPlaceCount: 20,
-  });
+  });*/
 
   navigator.geolocation.getCurrentPosition(function(position) {  
      newPoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -124,10 +136,6 @@ function initMap2() {
   location();
 
   directionsRenderer.setMap(map);
-  
-  document.getElementById("start").addEventListener("click", () => {
-    calculateAndDisplayRoute(directionsService, directionsRenderer);
-  });
 }
 
 function initMap3() {
@@ -281,4 +289,82 @@ function callback(results, status) {
     });
     marker.setPosition(newPoint);
   } else console.log("callback.status=" + status);
+}
+
+function selectAttraction() {
+  let checkboxes = document.querySelectorAll('input[name="selector"]:checked');
+  let values = [];
+  checkboxes.forEach((checkbox) => {
+      values.push(checkbox.value);
+  });
+  tourist_attraction = values[0];
+  movie_theater = values[1];
+  park = values[2];
+  stadium = values[3];
+  shopping_mall = values[4];
+  let length = values.length;
+
+  console.log(tourist_attraction + " - " + movie_theater + " - " + park + " - " + stadium + " - " + shopping_mall + " + " + length);
+
+
+  if(length == 0) {
+    localContextMapView = new google.maps.localContext.LocalContextMapView({
+      element: document.getElementById("map"),
+      placeTypePreferences: [
+        { type: "tourist_attraction" },
+      ],
+      maxPlaceCount: 20,
+    });
+  } else if(length == 1) {
+    localContextMapView = new google.maps.localContext.LocalContextMapView({
+      element: document.getElementById("map"),
+      placeTypePreferences: [
+        { type: values[0] },
+      ],
+      maxPlaceCount: 20,
+    });
+  } else if(length == 2) {
+    localContextMapView = new google.maps.localContext.LocalContextMapView({
+      element: document.getElementById("map"),
+      placeTypePreferences: [
+        { type: values[0] },
+        { type: values[1]},
+      ],
+      maxPlaceCount: 20,
+    });
+  } else if(length == 3) {
+    localContextMapView = new google.maps.localContext.LocalContextMapView({
+      element: document.getElementById("map"),
+      placeTypePreferences: [
+        { type: values[0] },
+        { type: values[1]},
+        { type: values[2]},
+      ],
+      maxPlaceCount: 20,
+    });
+  } else if(length == 4) {
+    localContextMapView = new google.maps.localContext.LocalContextMapView({
+      element: document.getElementById("map"),
+      placeTypePreferences: [
+        { type: values[0] },
+        { type: values[1]},
+        { type: values[2]},
+        { type: values[3]},
+      ],
+      maxPlaceCount: 20,
+    });
+  } else if(length == 5) {
+    localContextMapView = new google.maps.localContext.LocalContextMapView({
+      element: document.getElementById("map"),
+      placeTypePreferences: [
+        { type: values[0] },
+        { type: values[1]},
+        { type: values[2]},
+        { type: values[3]},
+        { type: values[4]},
+      ],
+      maxPlaceCount: 20,
+    });
+  }
+  initMap2(localContextMapView);
 }
