@@ -5,7 +5,7 @@
     $active2 = "";
     $active3 = "";
     echo'<script src="js/index.js"></script>';
-    
+    $way="hidden";
     if(isset($_GET['was'])){
       if($_GET['was']=="ortsuchen"){
         $way = "hidden";
