@@ -2,7 +2,7 @@
 
 <?php
     echo'<script src="js/index.js"></script>';
-    
+    $way="hidden";
     if(isset($_GET['was'])){
       if($_GET['was']=="route"){
         $way="";
