@@ -5,7 +5,7 @@
     $active2 = "";
     $active3 = "";
     echo'<script src="js/index.js"></script>';
-    $way="hidden";
+    
     if(isset($_GET['was'])){
       if($_GET['was']=="ortsuchen"){
         $way = "hidden";
@@ -20,14 +20,14 @@
         $active1 = "class = 'active'";
 
         echo'<script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext,places&v=beta&callback=initMap2">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=places,localContext&v=beta&callback=initMap2">
         </script>';
       }
       if($_GET['was']=="route"){
         $way = "";
         $active3 = "class = 'active'";
         echo'<script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=places&v=beta&callback=initMap3">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext,places&v=beta&callback=initMap3">
         </script>';
       }
     }
