@@ -258,12 +258,12 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, locatio
 }
 
 function getNearbyPlaces(position) {
-  console.log(position);
+  console.log(position + "##################################");
 
   request = {
     location: position,
-    radius: '10',
-    query: 'tourist_attraction',
+    radius: '1',
+    query: ['restaurant', 'park'],
   };
 
   service = new google.maps.places.PlacesService(map);
