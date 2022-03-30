@@ -54,7 +54,7 @@
     <a href="10.10.30.51:8080?was=route">Routenplaner</a>
     <a href="logout.php" class="right">Logout</a>
   -->
-    <a href="?was=michsuchen" <?php echo $active1 ?>>Dich suchen</a>
+    <a href="?was=michsuchen" <?php echo $active1 ?>>Mich suchen</a>
     <a href="?was=ortsuchen" <?php echo $active2 ?>>Ort suchen</a>
     <a href="?was=route" <?php echo $active3 ?>>Routenplaner</a>
     <div class="dropdown">
@@ -89,10 +89,24 @@
 
   <div id="map"></div>
 
-  <select <?php echo $way ?> id="waypoints" multiple></select>
+  <button <?php echo $way ?> class="open-button" onclick="openForm()">Route auswählen</button>
+  <button <?php echo $way ?> class="route-button" id="myButton">Routensegmente anzeigen</button>
 
-  <input <?php echo $way ?> type="submit" value="Starten" name="start" id="start">
+  <div class="form-popup" id="myForm">
+      <div class="form-container">
+        <h1>Select places</h1>
+
+        <select id="waypoints" multiple></select>
+        <input type="submit" value="Starten" name="start" id="start" class="btn">
+        <button type="button" class="btn cancel" onclick="closeForm()">Schließen</button>
+      </div>
+    </div>
 
   <div id="directions-panel"></div>
+    <script>
+        document.getElementById("myButton").onclick = function () {
+          location.href = "route.php";
+        };
+    </script>
   </body>
 </html>

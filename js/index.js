@@ -239,16 +239,25 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, locatio
       const summaryPanel = document.getElementById("directions-panel");
 
       summaryPanel.innerHTML = "";
+      var data = "";
 
       // For each route, display summary information.
-      for (let i = 0; i < route.legs.length; i++) {
+      for  (let i = 0; i < route.legs.length; i++) {
         const routeSegment = i + 1;
 
         summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br>";
+        data += "<b>Route Segment: " + routeSegment + "</b><br>";
         summaryPanel.innerHTML += route.legs[i].start_address + " to ";
+        data += route.legs[i].start_address + " to ";
         summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
+        data += route.legs[i].end_address + "<br>";
         summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
+        data += route.legs[i].distance.text + "<br><br>";
       }
+      sessionStorage.setItem("data", data);
+      console.log(sessionStorage.getItem("data"));
+      console.log("-------asdfadsfasdf");
+
     })
     .catch((e) => window.alert("Directions request failed due to " + e));
 
@@ -262,9 +271,9 @@ function getNearbyPlaces(position) {
 
   request = {
     location: position,
-    radius: '1',
-    query: ['restaurant', 'park'],
-  };
+    radius: '3',
+    query: ['tourist_attraction']
+  };  
 
   service = new google.maps.places.PlacesService(map);
   
@@ -379,4 +388,11 @@ function selectAttraction() {
       initMap2(localContextMapView);
     }
   }
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
 }
