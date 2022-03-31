@@ -245,13 +245,13 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, locatio
       for  (let i = 0; i < route.legs.length; i++) {
         const routeSegment = i + 1;
 
-        summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br>";
+        //summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br>";
         data += "<b>Route Segment: " + routeSegment + "</b><br>";
-        summaryPanel.innerHTML += route.legs[i].start_address + " to ";
+        //summaryPanel.innerHTML += route.legs[i].start_address + " to ";
         data += route.legs[i].start_address + " to ";
-        summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
+        //summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
         data += route.legs[i].end_address + "<br>";
-        summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
+        //summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
         data += route.legs[i].distance.text + "<br><br>";
       }
       sessionStorage.setItem("data", data);

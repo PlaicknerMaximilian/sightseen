@@ -30,6 +30,13 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext,places&v=beta&callback=initMap3">
         </script>';
       }
+    } else {
+      $way = "hidden";
+        $active2 = "class = 'active'";
+
+        echo'<script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWilWThH0ONE_t3Nb1NPvML_LvK2ItCc&libraries=localContext&v=beta&callback=initMap">
+        </script>';
     }
   ?>
 <html lang=en>
@@ -85,6 +92,7 @@
       </div>
     </div> 
     <a href="logout.php" class="right">Logout</a>
+    <a href="info.php" class="right">Informationen</a>
   </div>
 
   <div id="map"></div>
@@ -101,8 +109,6 @@
         <button type="button" class="btn cancel" onclick="closeForm()">Schließen</button>
       </div>
     </div>
-
-  <div id="directions-panel"></div>
     <script>
         document.getElementById("myButton").onclick = function () {
           location.href = "route.php";
