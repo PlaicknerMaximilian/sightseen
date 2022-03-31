@@ -51,7 +51,7 @@
     <script></script>
 
   <div class="header">
-    <h1>Sightseeing</h1>
+    <h1>SIGHTSEEN</h1>
   </div>
 
   <div class="navbar">
