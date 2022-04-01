@@ -221,6 +221,12 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, locatio
     waypts2[i]=waypts[i];
   }
   console.log(waypts[waypts.length - 1]);
+  console.log(waypts[waypts.length - 1].location);
+
+  console.log(location);
+
+  console.log(location.location);
+
   console.log("---------------------");
 
   directionsService
@@ -236,22 +242,15 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, locatio
       directionsRenderer.setDirections(response);
 
       const route = response.routes[0];
-      const summaryPanel = document.getElementById("directions-panel");
-
-      summaryPanel.innerHTML = "";
       var data = "";
 
       // For each route, display summary information.
       for  (let i = 0; i < route.legs.length; i++) {
         const routeSegment = i + 1;
 
-        //summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br>";
         data += "<b>Route Segment: " + routeSegment + "</b><br>";
-        //summaryPanel.innerHTML += route.legs[i].start_address + " to ";
         data += route.legs[i].start_address + " to ";
-        //summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
         data += route.legs[i].end_address + "<br>";
-        //summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
         data += route.legs[i].distance.text + "<br><br>";
       }
       sessionStorage.setItem("data", data);

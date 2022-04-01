@@ -102,7 +102,7 @@
 
   <div class="form-popup" id="myForm">
       <div class="form-container">
-        <h1>Select places</h1>
+        <h1>Orte auswählen</h1>
 
         <select id="waypoints" multiple></select>
         <input type="submit" value="Starten" name="start" id="start" class="btn">
